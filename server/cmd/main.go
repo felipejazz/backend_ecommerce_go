@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"log"
 
-	"github.com/felipejazz/ecommerce_go/cmd/api"
+	api "github.com/felipejazz/ecommerce_go/cmd/server"
 	"github.com/felipejazz/ecommerce_go/config"
 	"github.com/felipejazz/ecommerce_go/db"
 	"github.com/go-sql-driver/mysql"
@@ -12,6 +12,19 @@ import (
 
 func main() {
 
+	db, err := db.NewMySQLStorage(mysql.Config{
+
+		User:                 config.Envs.DBUser,
+		Passwd:               config.Envs.DBPassword,
+		Addr:                 config.Envs.DBAddress,
+		DBName:               config.Envs.DBName,
+		Net:                  "tcp",
+		AllowNativePasswords: true,
+		ParseTime:            true,
+	})
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	initStorage(db)
 
@@ -28,5 +41,3 @@ func initStorage(db *sql.DB) {
 	}
 	log.Println("DB: Successfully connected!")
 }
-
-m, err := migrate.NewWit
