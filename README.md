@@ -23,3 +23,9 @@ Make sure you have installed:
 
 ## Configuration
 - WIP
+
+## Testing
+
+To test code run:
+make build
+make test
