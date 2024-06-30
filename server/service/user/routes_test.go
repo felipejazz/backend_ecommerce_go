@@ -3,6 +3,7 @@ package user
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -19,8 +20,8 @@ func TestUserServerHandlers(t *testing.T) {
 		payload := types.RegisterUserPayload{
 			FirstName: "Jorge",
 			LastName:  "Bagre",
-			Email:     "",
-			Password:  "senha_do_bagre",
+			// Email:     "bagre@gmail.com",
+			Password: "bagre_password",
 		}
 
 		marshalled, _ := json.Marshal(payload)
@@ -44,7 +45,7 @@ func TestUserServerHandlers(t *testing.T) {
 type mockUserStore struct{}
 
 func (m *mockUserStore) GetUserByEmail(email string) (*types.User, error) {
-	return nil, nil
+	return nil, fmt.Errorf("user not found")
 }
 func (m *mockUserStore) GetUserByID(id int) (*types.User, error) {
 	return nil, nil
