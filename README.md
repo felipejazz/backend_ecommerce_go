@@ -27,5 +27,6 @@ Make sure you have installed:
 ## Testing
 
 To test code run:
+``bash 
 make build
 make test
