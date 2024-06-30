@@ -12,19 +12,6 @@ import (
 
 func main() {
 
-	db, err := db.NewMySQLStorage(mysql.Config{
-
-		User:                 config.Envs.DBUser,
-		Passwd:               config.Envs.DBPassword,
-		Addr:                 config.Envs.DBAddress,
-		DBName:               config.Envs.DBName,
-		Net:                  "tcp",
-		AllowNativePasswords: true,
-		ParseTime:            true,
-	})
-	if err != nil {
-		log.Fatal(err)
-	}
 
 	initStorage(db)
 
@@ -41,3 +28,5 @@ func initStorage(db *sql.DB) {
 	}
 	log.Println("DB: Successfully connected!")
 }
+
+m, err := migrate.NewWit
