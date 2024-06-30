@@ -26,6 +26,7 @@ Make sure you have installed:
 
 ## Testing
 
+Make sure that you are in /server directory 
 To test code run:
 ```bash
 make build
