@@ -1,10 +1,12 @@
 package user
 
 import (
+	"fmt"
 	"net/http"
 
-	"github.com/felipejazz/ecommerce_go/cmd/types"
-	"github.com/felipejazz/ecommerce_go/cmd/utils"
+	"github.com/felipejazz/ecommerce_go/service/auth"
+	"github.com/felipejazz/ecommerce_go/types"
+	"github.com/felipejazz/ecommerce_go/utils"
 	"github.com/gorilla/mux"
 )
 
@@ -13,7 +15,7 @@ type Handler struct {
 }
 
 func NewHandler(store types.UserStore) *Handler {
-	return &Handler{store}
+	return &Handler{store: store}
 }
 
 func (h *Handler) RegisterRoutes(router *mux.Router) {
@@ -24,6 +26,9 @@ func (h *Handler) RegisterRoutes(router *mux.Router) {
 
 func (h *Handler) handleLogin(w http.ResponseWriter, r *http.Request) {
 
+}
+
+func (h *Handler) handleRegister(w http.ResponseWriter, r *http.Request) {
 	// GET THE JSON PAYLOAD
 	var payload types.RegisterUserPayload
 	if err := utils.ParseJson(r, payload); err != nil {
@@ -31,9 +36,30 @@ func (h *Handler) handleLogin(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// CHECK IF USER EXISTS
+	_, err := h.store.GetUserByEmail(payload.Email)
+	if err == nil {
+		utils.WriteError(w, http.StatusBadRequest, fmt.Errorf("user with email %s already exists", payload.Email))
+		return
+	}
 
-}
+	hashedPassword, err := auth.HashPassword(payload.Password)
 
-func (h *Handler) handleRegister(w http.ResponseWriter, r *http.Request) {
+	if err != nil {
+		utils.WriteError(w, http.StatusInternalServerError, err)
+		return
+	}
+	err = h.store.CreateUser(types.User{
+		FirstName: payload.FirstName,
+		LastName:  payload.LastName,
+		Email:     payload.Email,
+		Password:  hashedPassword,
+	})
+
+	if err == nil {
+		utils.WriteError(w, http.StatusInternalServerError, err)
+		return
+	}
+
+	utils.WriteJson(w, http.StatusCreated, nil)
 
 }

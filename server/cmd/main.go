@@ -5,8 +5,8 @@ import (
 	"log"
 
 	"github.com/felipejazz/ecommerce_go/cmd/api"
-	"github.com/felipejazz/ecommerce_go/cmd/config"
-	"github.com/felipejazz/ecommerce_go/cmd/db"
+	"github.com/felipejazz/ecommerce_go/config"
+	"github.com/felipejazz/ecommerce_go/db"
 	"github.com/go-sql-driver/mysql"
 )
 

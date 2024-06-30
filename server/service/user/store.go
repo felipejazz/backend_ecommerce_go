@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 
-	"github.com/felipejazz/ecommerce_go/cmd/types"
+	"github.com/felipejazz/ecommerce_go/types"
 )
 
 type Store struct {
@@ -51,9 +51,14 @@ func scanRowIntoUser(rows *sql.Rows) (*types.User, error) {
 	err := rows.Scan(
 		&user.ID,
 		&user.FirstName,
-		&user.Lastname,
+		&user.LastName,
 		&user.Email,
 		&user.Password,
 		&user.CreatedAt,
 	)
+	if err != nil {
+		return nil, err
+	}
+
+	return user, nil
 }

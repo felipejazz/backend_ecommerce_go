@@ -10,8 +10,7 @@ type UserStore interface {
 	CreateUser(User) error
 }
 
-type mockUserStore struct {
-}
+type mockUserStore struct{}
 
 func GetUserByEmail(email string) (*User, error) {
 	return nil, nil
@@ -20,7 +19,7 @@ func GetUserByEmail(email string) (*User, error) {
 type User struct {
 	ID        int       `json:"id"`
 	FirstName string    `json:"firstName"`
-	Lastname  string    `json:"lasName"`
+	LastName  string    `json:"lasName"`
 	Email     string    `json:"email"`
 	Password  string    `json:"password"`
 	CreatedAt time.Time `json:"createdAt"`
@@ -28,7 +27,7 @@ type User struct {
 
 type RegisterUserPayload struct {
 	FirstName string `json:"firstName"`
-	Lastname  string `json:"lasName"`
+	LastName  string `json:"lasName"`
 	Email     string `json:"email"`
 	Password  string `json:"password"`
 }
