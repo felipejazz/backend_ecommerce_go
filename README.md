@@ -1,6 +1,7 @@
 # Go Ecommerce Project
 
 This project is an ecommerce platform built in Go, aimed at implementing a JWT authentication system, MySQL integration, and including automated tests.
+The server is located in server directory.
 
 ## Planned Features
 
