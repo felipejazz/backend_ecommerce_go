@@ -26,8 +26,8 @@ func (s *Server) Run() error {
 	subrouter := router.PathPrefix("/server/v1").Subrouter()
 
 	log.Println("Listening on", s.addr)
-
-	userHandler := user.NewHandler()
+	userStore := user.NewStore(s.db)
+	userHandler := user.NewHandler(userStore)
 	userHandler.RegisterRoutes(subrouter)
 
 	return http.ListenAndServe(s.addr, router)
